@@ -6,7 +6,7 @@ language messages en
 :let mapleader = " "
 :nnoremap <Space> <Nop>
 
-:nnoremap <Leader>c :colorscheme
+:nnoremap <Leader>c :colorscheme 
 :nnoremap <silent> <Leader>e :set guifont=*<CR>
 
 " Quickly access this file
@@ -212,15 +212,15 @@ let plugin_location='$VIMRUNTIME\plugged'
     Plug 'pangloss/vim-javascript'
 
     " Colorschemes
-    Plug 'tyrannicaltoucan/vim-deep-space' " Quite ok, colorful, but still calm
-    Plug 'whatyouhide/vim-gotham'          " Quite ok
-    Plug 'cocopon/iceberg.vim'             " Quite ok, but split triggers me
-    Plug 'arzg/vim-substrata'              " +
-    Plug 'ludokng/vim-odyssey'             " +-
-    Plug 'seesleestak/duo-mini'            " +
-    Plug 'jacoborus/tender.vim'            " +
-    Plug 'tomasiser/vim-code-dark'         " well, it's vs
-    Plug 'embark-theme/vim'                "
+    " Plug 'tyrannicaltoucan/vim-deep-space' " Quite ok, colorful, but still calm
+    " Plug 'whatyouhide/vim-gotham'          " Quite ok
+    " Plug 'cocopon/iceberg.vim'             " Quite ok, but split triggers me
+    " Plug 'arzg/vim-substrata'              " +
+    " Plug 'ludokng/vim-odyssey'             " +-
+    " Plug 'seesleestak/duo-mini'            " +
+    " Plug 'jacoborus/tender.vim'            " +
+    " Plug 'tomasiser/vim-code-dark'         " well, it's vs
+    Plug 'embark-theme/vim'
 :call plug#end()
 
 " Plugin Install
@@ -347,7 +347,7 @@ endif
 " set guifont=Fira\ Mono:h16
 " set guifont=Inconsolata:h14
 " set guifont=monofur:h14
-set guifont=Consolas:h16,ProFontWindows:h14,Fira\ Mono:h14
+set guifont=Cascadia\ Code:h16,Consolas:h16,ProFontWindows:h14,Fira\ Mono:h14
 
 " Interface clean-up
 " The only variation of vim usable on Windows is GVim, so all the settings
