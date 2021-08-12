@@ -6,7 +6,7 @@ language messages en
 :let mapleader = " "
 :nnoremap <Space> <Nop>
 
-:nnoremap <Leader>c :colorscheme 
+:nnoremap <Leader>c :colorscheme
 :nnoremap <silent> <Leader>e :set guifont=*<CR>
 
 " Quickly access this file
@@ -174,9 +174,16 @@ set backspace=indent,eol,start
 " in the end of the line in plug section. For example:
 " Enabled:  Plug 'junegunn/goyo.vim'
 " Disabled: Plug 'junegunn/goyo.vim', { 'on': [] }
-"
+
 " Automatically install vim-plug if it's not present
-" TODO:
+if empty(glob('$VIMRUNTIME\autoload\plug.vim'))
+    :let plug_vim_path=expand($VIMRUNTIME) . '\autoload\plug.vim'
+
+    " The seemingly excessive escaping and quotations are needed when Vim is
+    " installed into 'Program Files (x86)'.
+    silent execute "!PowerShell \"Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim | "
+        \ . "New-Item \\\"" . shellescape(plug_vim_path) . "\\\" -Force\""
+endif
 
 let plugin_location='$VIMRUNTIME\plugged'
 
