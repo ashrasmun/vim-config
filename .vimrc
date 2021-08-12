@@ -197,14 +197,14 @@ endif
 " Install python package if it's not yet installed
 function! s:EnsurePackageInstalled(package) abort
     if exists("g:VIM_PYTHON_PATH")
-        silent execute "!py -2.7 -m " . a:package
+        silent execute "!py -2.7 -m pip show " . a:package
         if v:shell_error==1
             silent execute "!py -2.7 -m pip install " . a:package
         endif
     endif
 
     if exists("g:VIM_PYTHON_THREE_PATH")
-        silent execute "!py -3 -m " . a:package
+        silent execute "!py -3 -m pip show " . a:package
         if v:shell_error==1
             silent execute "!py -3 -m pip install " . a:package
         endif
