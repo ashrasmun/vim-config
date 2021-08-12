@@ -190,8 +190,9 @@ if empty(glob('$VIMRUNTIME\autoload\plug.vim'))
 
     " The seemingly excessive escaping and quotations are needed when Vim is
     " installed into 'Program Files (x86)'.
-    silent execute "!PowerShell \"Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim | "
-        \ . "New-Item \\\"" . shellescape(plug_vim_path) . "\\\" -Force\""
+    silent execute "!PowerShell \"Invoke-WebRequest -UseBasicParsing "
+        \ . "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        \ . " | New-Item \\\"" . shellescape(plug_vim_path) . "\\\" -Force\""
 endif
 
 " Install python package if it's not yet installed
