@@ -78,16 +78,25 @@ set foldmethod=indent
 set foldlevel=99
 nnoremap <Leader>f za
 
-"" Python
-" " This is needed because the python is loaded dynamically
-" if exists("g:VIM_PYTHON_PATH")
-"     " For some reason, I cannot simply use 'set' here. The only way to 'set'
-"     " these variables is to use 'let' + &...
-"     let &pythonthreehome=g:VIM_PYTHON_PATH
-"     let &pythonthreedll=g:VIM_PYTHON_DLL
-" else
-"     echom "You need to set VIM_PYTHON_PATH in order to use Python"
-" endif
+" Python
+" This is needed because the python is loaded dynamically
+if exists("g:VIM_PYTHON_PATH")
+    " For some reason, I cannot simply use 'set' here. The only way to 'set'
+    " these variables is to use 'let' + &...
+    let &pythonhome=g:VIM_PYTHON_PATH
+    let &pythondll=g:VIM_PYTHON_DLL
+else
+    echom "You need to set VIM_PYTHON_PATH in order to use Python"
+endif
+
+if exists("g:VIM_PYTHON_THREE_PATH")
+    " For some reason, I cannot simply use 'set' here. The only way to 'set'
+    " these variables is to use 'let' + &...
+    let &pythonthreehome=g:VIM_PYTHON_THREE_PATH
+    let &pythonthreedll=g:VIM_PYTHON_THREE_DLL
+else
+    echom "You need to set VIM_PYTHON_THREE_PATH in order to use Python3"
+endif
 
 " Silently invoke Python3 just to skip the annoying warning in the beginning.
 " It's left out here for compatibility reasons (this shouldn't be a problem
@@ -187,9 +196,18 @@ endif
 
 " Install python package if it's not yet installed
 function! s:EnsurePackageInstalled(package) abort
-    silent execute "!py -3 -m " . a:package
-    if v:shell_error==1
-        silent execute "!py -3 -m pip install " . a:package
+    if exists("g:VIM_PYTHON_PATH")
+        silent execute "!py -2.7 -m " . a:package
+        if v:shell_error==1
+            silent execute "!py -2.7 -m pip install " . a:package
+        endif
+    endif
+
+    if exists("g:VIM_PYTHON_THREE_PATH")
+        silent execute "!py -3 -m " . a:package
+        if v:shell_error==1
+            silent execute "!py -3 -m pip install " . a:package
+        endif
     endif
 endfunction
 
