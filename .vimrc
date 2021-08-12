@@ -185,6 +185,14 @@ if empty(glob('$VIMRUNTIME\autoload\plug.vim'))
         \ . "New-Item \\\"" . shellescape(plug_vim_path) . "\\\" -Force\""
 endif
 
+" Install python package if it's not yet installed
+function! s:EnsurePackageInstalled(package) abort
+    silent execute "!py -3 -m " . a:package
+    if v:shell_error==1
+        silent execute "!py -3 -m pip install " . a:package
+    endif
+endfunction
+
 let plugin_location='$VIMRUNTIME\plugged'
 
 :call plug#begin(plugin_location)
@@ -214,6 +222,7 @@ let plugin_location='$VIMRUNTIME\plugged'
     Plug 'vim-scripts/indentpython.vim'
     Plug 'vim-syntastic/syntastic'
     Plug 'nvie/vim-flake8'
+    call <SID>EnsurePackageInstalled("flake8")
 
     " JavaScript
     Plug 'pangloss/vim-javascript'
