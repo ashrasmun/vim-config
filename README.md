@@ -11,3 +11,6 @@ My Vim configuration, more precisely GVim.
 6. Set the `g:VIM_RC` and `g:VIM_GVIMFULLSCREEN_DLL` variables to point to proper locations on your hard drive.
 7. Copy `.flake8` to `%appdata%\..` (Windows' "home")
 8. You're done :)
+
+## File associations
+If you want to associate certain file types with GVim, you should copy `gvim_remote_silent.bat` to location where you have your `gvim.exe` (or modify the script accordingly, you do you...). Then, you should point to the batch file with _Right Click_ -> "Open With..." option. Voila!
