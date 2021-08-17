@@ -378,11 +378,8 @@ if has('win32')
 endif
 
 "" Fonts
-" set guifont=Consolas:h15
-" set guifont=Fira\ Mono:h16
-" set guifont=Inconsolata:h14
-" set guifont=monofur:h14
-set guifont=Cascadia\ Code:h16,Consolas:h16,ProFontWindows:h14,Fira\ Mono:h14
+" Use 16 for streams, 12 for solo work
+set guifont=Cascadia\ Code:h12,Consolas:h16,ProFontWindows:h14,Fira\ Mono:h14
 
 " Interface clean-up
 " The only variation of vim usable on Windows is GVim, so all the settings
