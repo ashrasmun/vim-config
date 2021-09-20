@@ -512,14 +512,14 @@ elseif has('unix')
         :call plug#begin('$VIMRUNTIME/plugged')
             Plug 'junegunn/goyo.vim' " Distraction free editing
             Plug 'wincent/terminus'  " Change cursor depending on mode
-				     " Baked into GVim, necessary in WSL.
-	    Plug 'embark-theme/vim', { 'as': 'embark' }
+            " Baked into GVim, necessary in WSL.
+            Plug 'embark-theme/vim', { 'as': 'embark' }
             Plug 'morhetz/gruvbox'
         :call plug#end()
 
-	" Enable 24-bit color support for nvim in Windows Terminal
-	set termguicolors 
-	colorscheme embark
+        " Enable 24-bit color support for nvim in Windows Terminal
+        set termguicolors 
+        colorscheme embark
 
         " Toggle Goyo (distration free writing)
         noremap <silent> <F3> :Goyo<CR>
