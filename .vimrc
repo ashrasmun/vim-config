@@ -55,8 +55,8 @@ if has('win32')
 
         " Character under cursor is whitespace?
         if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
-        " Then remove it!
-        execute 'normal dw'
+            " Then remove it!
+            execute 'normal dw'
         endif
     endfunction
 
@@ -242,7 +242,7 @@ if has('win32')
         Plug 'vim-scripts/indentpython.vim'
         Plug 'vim-syntastic/syntastic'
         Plug 'nvie/vim-flake8'
-        call <SID>EnsurePackageInstalled("flake8")
+        "call <SID>EnsurePackageInstalled("flake8")
 
         " JavaScript
         Plug 'pangloss/vim-javascript'
@@ -264,6 +264,9 @@ if has('win32')
 
     " Plugin Update
     noremap <Leader>pu :source %<CR>:PlugUpdate<CR>
+
+    "" Flake
+    let g:flake8_cmd="C:\\Users\\ashra\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 
     "" NERDTree
     " Invoke nerd tree every time vim is opened
@@ -296,38 +299,38 @@ if has('win32')
         " Location of the fullscreen fixer dll
 
         function! s:ToggleFullscreen() abort
-        let l:bg_color = s:get_color("Normal", "guibg")
-        let l:bg_color_value = s:value_only(bg_color)
+            let l:bg_color = s:get_color("Normal", "guibg")
+            let l:bg_color_value = s:value_only(bg_color)
 
-        if !l:bg_color_value
-            echom 's:ToggleFullscreen: The color value is probably
-                \not set properly'
-            return
-        endif
+            if !l:bg_color_value
+                echom 's:ToggleFullscreen: The color value is probably
+                    \not set properly'
+                return
+            endif
 
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 0)
-        redraw
+            silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
+            silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 0)
+            redraw
         endfunction
 
         function! s:ForceFullscreen() abort
-        let l:bg_color = s:get_color("Normal", "guibg")
-        let l:bg_color_value = s:value_only(bg_color)
+            let l:bg_color = s:get_color("Normal", "guibg")
+            let l:bg_color_value = s:value_only(bg_color)
 
-        if !l:bg_color_value
-            echom 's:ForceFullscreen: The color value is probably
-                \not set properly'
-            return
-        endif
+            if !l:bg_color_value
+                echom 's:ForceFullscreen: The color value is probably
+                    \not set properly'
+                return
+            endif
 
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 1)
-        redraw!
+            silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
+            silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 1)
+            redraw!
         endfunction
 
         function! s:ForceDoubleFullscreen() abort
-        call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 3)
-        redraw
+            call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 3)
+            redraw
         endfunction
 
         autocmd GUIEnter * call <SID>ForceFullscreen()
@@ -339,16 +342,16 @@ if has('win32')
         " gvimfullscreen.dll. Goyo methods are a bit unreliable, so we need to run
         " separate function after Goyo is done doing what it's doing.
         function! s:FullscreenFix()
-        " Both of these are needed as Goyo doesn't cope well with colorscheme
-        " manipulation mixed with screen resolution fiddling. It looks
-        " completely horrible on Windows, but it's the only known method for
-        " me to make it work...
-        if g:goyo_state
-            call <SID>ForceFullscreen()
-        else
-            call <SID>ToggleFullscreen()
-            call <SID>ToggleFullscreen()
-        endif
+            " Both of these are needed as Goyo doesn't cope well with colorscheme
+            " manipulation mixed with screen resolution fiddling. It looks
+            " completely horrible on Windows, but it's the only known method for
+            " me to make it work...
+            if g:goyo_state
+                call <SID>ForceFullscreen()
+            else
+                call <SID>ToggleFullscreen()
+                call <SID>ToggleFullscreen()
+            endif
         endfunction
 
         " 0 - outside Goyo
@@ -357,18 +360,18 @@ if has('win32')
 
         "" Goyo config
         function! s:goyo_enter()
-        let g:goyo_state = 1
+            let g:goyo_state = 1
 
-        " This works for 'nord' colorscheme
-        let l:eob_color = s:get_color("ColorColumn", "guifg")
-        silent! execute "highlight EndOfBuffer guifg=" . l:eob_color
+            " This works for 'nord' colorscheme
+            let l:eob_color = s:get_color("ColorColumn", "guifg")
+            silent! execute "highlight EndOfBuffer guifg=" . l:eob_color
 
-        set number relativenumber
+            set number relativenumber
         endfunction
 
         " This supports leaving Goyo via :x, :q etc
         function! s:goyo_leave()
-        let g:goyo_state = 0
+            let g:goyo_state = 0
         endfunction
 
         autocmd! User GoyoEnter call <SID>goyo_enter()
@@ -468,6 +471,27 @@ if has('win32')
     command! FormatXML :%!python -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
     command! FormatJSON :%!python -m json.tool
 
+    "" Fonts
+    " This needs to be there - it's an initialization required on startup
+    set guifont=Cascadia\ Code:h12
+
+    let s:fontsize = 12
+    function! AdjustFontSize(amount)
+      let s:fontsize = s:fontsize + a:amount
+      execute "set guifont=Cascadia\\ Code:h" . s:fontsize
+
+      if libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "QueryFullScreen", 0)
+          call <SID>ForceFullscreen()
+      endif
+
+      execute "normal \<C-w>="
+    endfunction
+
+    noremap <C-Up> :call AdjustFontSize(1)<CR>
+    noremap <C-Down> :call AdjustFontSize(-1)<CR>
+    inoremap <C-Up> <Esc>:call AdjustFontSize(1)<CR>a
+    inoremap <C-Down> <Esc>:call AdjustFontSize(-1)<CR>a
+
     " TODO(05-05-20, ashrasmun): add leader key mappings for:
     " Starts with 'd', because of development
     " 1. compile code: <Leader>dc ?
@@ -482,7 +506,7 @@ if has('win32')
     "
     " Run last command:
     " @:
-elseif has('unix') 
+elseif has('unix')
     if has('nvim')
         language messages en_US.utf8
 
@@ -518,7 +542,7 @@ elseif has('unix')
         :call plug#end()
 
         " Enable 24-bit color support for nvim in Windows Terminal
-        set termguicolors 
+        set termguicolors
         colorscheme embark
 
         " Toggle Goyo (distration free writing)
