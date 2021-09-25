@@ -479,6 +479,11 @@ function! AdjustFontSize(amount)
   let s:fontsize = s:fontsize + a:amount
   execute "set guifont=Cascadia\\ Code:h" . s:fontsize
 
+  " Make sure 'set guifont' has enough column to not excessively shrink the
+  " window on resize.
+  set columns=499
+  set lines=499
+
   if libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "QueryFullScreen", 0)
       call <SID>ForceFullscreen()
   endif
