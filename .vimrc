@@ -26,8 +26,8 @@ endif
 " of function declaration in Vim script
 function! s:FixFullscreenAfterSource() abort
     if has('win32')
-    call <SID>ToggleFullscreen()
-    call <SID>ToggleFullscreen()
+        call <SID>ToggleFullscreen()
+        call <SID>ToggleFullscreen()
     endif
 endfunction
 
