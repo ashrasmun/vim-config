@@ -2,6 +2,10 @@
 " Force english inside Vim
 language messages en
 
+" Enable completion list when writing in a command line (that bar in the very
+" bottom :).)
+set wildmenu
+
 " Set leader key to space
 :let mapleader = " "
 :nnoremap <Space> <Nop>
@@ -266,10 +270,18 @@ noremap <Leader>pi :source %<CR>:PlugInstall<CR>
 noremap <Leader>pu :source %<CR>:PlugUpdate<CR>
 
 "" Syntastic
-let g:syntastic_python_python_exec="C:\\Users\\ashra\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+if exists("g:VIM_PYTHON_THREE_PATH")
+    let g:syntastic_python_python_exec=g:VIM_PYTHON_THREE_PATH . "python.exe"
+elseif exists("g:VIM_PYTHON_PATH")
+    let g:syntastic_python_python_exec=g:VIM_PYTHON_PATH . "python.exe"
+endif
 
 "" Flake
-let g:flake8_cmd="C:\\Users\\ashra\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+if exists("g:VIM_PYTHON_THREE_PATH")
+    let g:flake8_cmd=g:VIM_PYTHON_THREE_PATH . "python.exe"
+elseif exists("g:VIM_PYTHON_PATH")
+    let g:flake8_cmd=g:VIM_PYTHON_PATH . "python.exe"
+endif
 
 "" NERDTree
 " Invoke nerd tree every time vim is opened
