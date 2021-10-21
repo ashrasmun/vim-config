@@ -255,7 +255,8 @@ let plugin_location='$VIMRUNTIME\plugged'
     " Plug 'seesleestak/duo-mini'            " +
     " Plug 'jacoborus/tender.vim'            " +
     " Plug 'tomasiser/vim-code-dark'         " well, it's vs
-    Plug 'embark-theme/vim'
+    " Plug 'embark-theme/vim'
+    Plug 'nanotech/jellybeans.vim'  " Pretty minimalistic
 :call plug#end()
 
 " Plugin Install
@@ -263,6 +264,9 @@ noremap <Leader>pi :source %<CR>:PlugInstall<CR>
 
 " Plugin Update
 noremap <Leader>pu :source %<CR>:PlugUpdate<CR>
+
+"" Syntastic
+let g:syntastic_python_python_exec="C:\\Users\\ashra\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 
 "" Flake
 let g:flake8_cmd="C:\\Users\\ashra\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
@@ -451,7 +455,7 @@ augroup END
 
 " Colorscheme setting needs to be done AFTER setting highlight colors
 " That way, the colorscheme can react and change accordingly
-colorscheme embark
+colorscheme jellybeans
 
 """ Keybindings
 " Map Ctrl-hjkl to move between windows
@@ -510,3 +514,6 @@ inoremap <C-Down> <Esc>:call AdjustFontSize(-1)<CR>a
 "
 " Run last command:
 " @:
+
+" Clean up the highlight after refresh
+noh
