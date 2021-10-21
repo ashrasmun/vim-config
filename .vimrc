@@ -73,7 +73,9 @@ endfunction
 :noremap <Leader>bd :call <SID>DeleteBuffersExceptOpened()<CR>
 
 "" Choose buffer
-:nnoremap <Leader>bb :Buffers<CR>
+" Keep the 'silent!' as it hides unimportant warnings when :Buffers is first
+" invoked.
+:nnoremap <Leader>bb :silent! Buffers<CR>
 
 "" Folding
 "  Emulate IDE-like folding ability, so that it is possible to fold the code
@@ -291,7 +293,9 @@ elseif exists("g:VIM_PYTHON_PATH")
 endif
 
 "" fzf
-noremap <Leader>f :Files %:h<CR>
+" Keep the 'silent!' as it hides unimportant warnings when :Files is first
+" invoked.
+noremap <Leader>f :silent! Files %:h<CR>
 
 "" NERDTree
 " Invoke nerd tree every time vim is opened
