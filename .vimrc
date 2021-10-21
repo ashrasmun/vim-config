@@ -73,14 +73,13 @@ endfunction
 :noremap <Leader>bd :call <SID>DeleteBuffersExceptOpened()<CR>
 
 "" Choose buffer
-:nnoremap <Leader>bb :buffers<CR>:b
+:nnoremap <Leader>bb :Buffers<CR>
 
 "" Folding
 "  Emulate IDE-like folding ability, so that it is possible to fold the code
 "  in {} block
 set foldmethod=indent
 set foldlevel=99
-nnoremap <Leader>f za
 
 " Python
 " This is needed because the python is loaded dynamically
@@ -232,8 +231,16 @@ let plugin_location='$VIMRUNTIME\plugged'
     Plug 'markonm/traces.vim'
 
     " File fuzzy searching
-    " I cannot make it work...
-    "Plug 'kien/ctrlp.vim'
+    " Windows How To:
+    " 1. PlugInstall, as always. Disregard the errors related to temp files.
+    " 2. Install fzf:
+    "     a. cd $VIMRUNTIME\plugged\fzf
+    "     b. powershell -ExecutionPolicy Bypass .\install --bin
+    " 3. Install ripgrep - needed for :Rg. This tool makes you find stuff in
+    "    files really fast.
+    "    https://github.com/BurntSushi/ripgrep/releases
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
 
     "" Programming related
     Plug 'cespare/vim-toml'
@@ -282,6 +289,9 @@ if exists("g:VIM_PYTHON_THREE_PATH")
 elseif exists("g:VIM_PYTHON_PATH")
     let g:flake8_cmd=g:VIM_PYTHON_PATH . "python.exe"
 endif
+
+"" fzf
+noremap <Leader>f :Files %:h<CR>
 
 "" NERDTree
 " Invoke nerd tree every time vim is opened
