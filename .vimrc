@@ -222,12 +222,14 @@ let plugin_location='$VIMRUNTIME\plugged'
 :call plug#begin(plugin_location)
     Plug 'junegunn/goyo.vim'
     Plug 'tpope/vim-surround'
+
+    " Enable . functionality for stuff from plugins, like vim-surround
     Plug 'tpope/vim-repeat'
     Plug 'scrooloose/nerdtree'
-    Plug 'easymotion/vim-easymotion'
 
-    " Smooth scrolling when using Ctrl-d, Ctrl-u
-    "Plug 'psliwka/vim-smoothie' " , { 'on': [] }
+    " Let's you get to any word very quickly using <Leader><Leader> + w / b.
+    " It also does way more, if you care to read the docs!
+    Plug 'easymotion/vim-easymotion'
 
     " Real-time substitution preview
     Plug 'markonm/traces.vim'
@@ -253,8 +255,12 @@ let plugin_location='$VIMRUNTIME\plugged'
     " Python
     Plug 'vim-scripts/indentpython.vim'
     Plug 'vim-syntastic/syntastic'
+    " NOTE: You need to make sure that flake is installed.
+    " :!py -3 -m pip show flake8
+    " :!py -3 -m pip install flake8 && pause
+    " Using EnsurePackageInstalled("flake8") takes a bit too much time on
+    " every source...
     Plug 'nvie/vim-flake8'
-    "call <SID>EnsurePackageInstalled("flake8")
 
     " JavaScript
     Plug 'pangloss/vim-javascript'
@@ -293,9 +299,23 @@ elseif exists("g:VIM_PYTHON_PATH")
 endif
 
 "" fzf
+
+" Guarantee, that opening fzf in NERDTree is not going to happen. Instead, the
+" next window's files are taken in such situation. This is mainly to not mess
+" with NERDTree.
+"
+" Thanks, dkarter!
+" https://github.com/junegunn/fzf/issues/453#issuecomment-354634207
+function! FZFOpen(command_str)
+  if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
+    exe "normal! \<c-w>\<c-w>"
+  endif
+  exe 'normal! ' . a:command_str . "\<cr>"
+endfunction
+
 " Keep the 'silent!' as it hides unimportant warnings when :Files is first
 " invoked.
-noremap <Leader>f :silent! Files %:h<CR>
+noremap <Leader>f :call FZFOpen(':silent! Files %:h')<CR>
 
 "" NERDTree
 " Invoke nerd tree every time vim is opened
