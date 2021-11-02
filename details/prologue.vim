@@ -44,3 +44,23 @@ if empty(glob('$VIMRUNTIME\autoload\plug.vim'))
     \ . "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     \ . " | New-Item \\\"" . shellescape(plug_vim_path) . "\\\" -Force\""
 endif
+
+" ---------------------------------- Utils ----------------------------------- "
+" Fetches desired color from the current colorscheme.
+" Example: GetColor("Cursor", "guifg")
+function! g:GetColor(group, option) abort
+    redir => l:hi_color
+    execute "silent! hi! " . a:group
+    redir END
+
+    let l:option_idx = strridx(l:hi_color, a:option)
+    let l:value_only_idx = l:option_idx + 6
+    let l:option_only = strpart(l:hi_color, l:value_only_idx, 7)
+
+    return l:option_only
+endfunction
+
+" This function assumes, that the color is provided in #123456 format
+function! g:GetColorValue(color_hex_code) abort
+    return str2nr(strpart(a:color_hex_code, 1, 6), 16)
+endfunction

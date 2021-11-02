@@ -10,6 +10,7 @@ function SourceDetail(detail_script)
 endfunction
 
 call SourceDetail("prologue.vim")
+call SourceDetail("fullscreen.vim")
 call SourceDetail("leaders.vim")
 call SourceDetail("epilogue.vim")
 
@@ -22,20 +23,6 @@ language messages en
 " Enable completion list when writing in a command line (that bar in the very
 " bottom :).)
 set wildmenu
-
-
-
-
-" On Windows, sourcing vimrc results in the window being in a really weird
-" state. To fix that, the screen needs to be toggled twice at the end, so
-" please don't add anything below this line.
-" of function declaration in Vim script
-function! s:FixFullscreenAfterSource() abort
-    if has('win32')
-        call <SID>ToggleFullscreen()
-        call <SID>ToggleFullscreen()
-    endif
-endfunction
 
 "" Functions
 " This function trims the whole file!
@@ -299,52 +286,6 @@ let g:goyo_width=80
 " Temporary, until it's moved somewhere else. At least now it's ina single
 " 'block' of text.
 if has('win32')
-    " Make GVim fullscreen on startup
-    " Don't feel tempted to use 64-bit version of this, as it doesn't work
-    " REQUIRES: https://github.com/derekmcloughlin/gvimfullscreen_win32/tree/master
-
-    " Location of the fullscreen fixer dll
-
-    function! s:ToggleFullscreen() abort
-        let l:bg_color = s:get_color("Normal", "guibg")
-        let l:bg_color_value = s:value_only(bg_color)
-
-        if !l:bg_color_value
-            echom 's:ToggleFullscreen: The color value is probably
-                \not set properly'
-            return
-        endif
-
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 0)
-        redraw
-    endfunction
-
-    function! s:ForceFullscreen() abort
-        let l:bg_color = s:get_color("Normal", "guibg")
-        let l:bg_color_value = s:value_only(bg_color)
-
-        if !l:bg_color_value
-            echom 's:ForceFullscreen: The color value is probably
-                \not set properly'
-            return
-        endif
-
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "SetBackgroundColor", bg_color_value)
-        silent call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 1)
-        redraw!
-    endfunction
-
-    function! s:ForceDoubleFullscreen() abort
-        call libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "ToggleFullScreen", 3)
-        redraw
-    endfunction
-
-    autocmd GUIEnter * call <SID>ForceFullscreen()
-    noremap <silent> <F11> :call <SID>ToggleFullscreen()<CR>
-    noremap <silent> <F12> :call <SID>ForceFullscreen()<CR>
-    noremap <silent> <s-F12> :call <SID>ForceDoubleFullscreen()<CR>
-
     " This function is here only to fix Goyo's behaviour in GVim while using the
     " gvimfullscreen.dll. Goyo methods are a bit unreliable, so we need to run
     " separate function after Goyo is done doing what it's doing.
@@ -354,10 +295,10 @@ if has('win32')
         " completely horrible on Windows, but it's the only known method for
         " me to make it work...
         if g:goyo_state
-            call <SID>ForceFullscreen()
+            call ForceFullscreen()
         else
-            call <SID>ToggleFullscreen()
-            call <SID>ToggleFullscreen()
+            call ToggleFullscreen()
+            call ToggleFullscreen()
         endif
     endfunction
 
@@ -370,7 +311,7 @@ if has('win32')
         let g:goyo_state = 1
 
         " This works for 'nord' colorscheme
-        let l:eob_color = s:get_color("ColorColumn", "guifg")
+        let l:eob_color = g:get_color("ColorColumn", "guifg")
         silent! execute "highlight EndOfBuffer guifg=" . l:eob_color
 
         set number relativenumber
@@ -416,29 +357,11 @@ set guioptions-=M " left-hand scroll bar
 " Treat underscores as "word" separators
 " :set iskeyword-=_
 
-" Fetches desired color from the current colorscheme.
-" Example: get_color("Cursor", "guifg")
-function! s:get_color(group, option) abort
-    redir => l:hi_color
-    execute "silent! hi! " . a:group
-    redir END
-
-    let l:option_idx = strridx(l:hi_color, a:option)
-    let l:value_only_idx = l:option_idx + 6
-    let l:option_only = strpart(l:hi_color, l:value_only_idx, 7)
-
-    return l:option_only
-endfunction
-
-" This function assumes, that the color is provided in #123456 format
-function! s:value_only(color_hex_code) abort
-    return str2nr(strpart(a:color_hex_code, 1, 6), 16)
-endfunction
 
 " Make sure that color of the background for line numbers is the same
 " as the normal background
 function! s:normalize_bg_color() abort
-    let l:normal_bg_color = s:get_color("Normal", "guibg")
+    let l:normal_bg_color = g:get_color("Normal", "guibg")
     execute "hi LineNr guibg=" . l:normal_bg_color
 endfunction
 
@@ -493,7 +416,7 @@ function! AdjustFontSize(amount)
   set lines=499
 
   if libcallnr(g:VIM_GVIMFULLSCREEN_DLL, "QueryFullScreen", 0)
-      call <SID>ForceFullscreen()
+      call ForceFullscreen()
   endif
 
   execute "normal \<C-w>="
