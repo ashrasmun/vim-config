@@ -18,6 +18,6 @@ let g:VIM_GVIMFULLSCREEN_DLL="h:\\dev\\projects\\gvimfullscreen_win32\\gvimfulls
 
 try
     exec "source " . g:VIM_RC
-catch
-    echom "Cannot find the Vim configuration file: " . g:VIM_RC
+catch /.*/
+    echom "There were problems during parsing of " . g:VIM_RC | echom " " | echom v:exception
 endtry
