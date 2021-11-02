@@ -5,7 +5,7 @@ endif
 
 let g:VIM_RC_ROOT_DIR=fnamemodify(g:VIM_RC, ':h')
 
-execute "source " . g:VIM_RC_ROOT_DIR . "/details/preamble.vim"
+execute "source " . g:VIM_RC_ROOT_DIR . "/details/prologue.vim"
 
 " ------------------------------------------------------------------------------
 
