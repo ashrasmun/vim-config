@@ -6,6 +6,7 @@ endif
 let g:VIM_RC_ROOT_DIR=fnamemodify(g:VIM_RC, ':h')
 
 execute "source " . g:VIM_RC_ROOT_DIR . "/details/prologue.vim"
+execute "source " . g:VIM_RC_ROOT_DIR . "/details/epilogue.vim"
 
 " ------------------------------------------------------------------------------
 
@@ -531,5 +532,3 @@ inoremap <C-Down> <Esc>:call AdjustFontSize(-1)<CR>a
 " Run last command:
 " @:
 
-" Clean up the highlight after refresh
-noh
