@@ -10,6 +10,7 @@ function SourceDetail(detail_script)
 endfunction
 
 call SourceDetail("prologue.vim")
+call SourceDetail("leaders.vim")
 call SourceDetail("epilogue.vim")
 
 " ------------------------------------------------------------------------------
@@ -23,15 +24,7 @@ language messages en
 set wildmenu
 
 
-:nnoremap <Leader>c :colorscheme
-:nnoremap <silent> <Leader>e :set guifont=*<CR>
 
-" Quickly access this file
-if exists("g:VIM_RC")
-    noremap <silent> <Leader>v :execute 'edit!' g:VIM_RC<CR>:set number relativenumber<CR>:<ESC>
-else
-    echom "You need to set VIM_RC variable so that it points to this file"
-endif
 
 " On Windows, sourcing vimrc results in the window being in a really weird
 " state. To fix that, the screen needs to be toggled twice at the end, so
@@ -43,16 +36,6 @@ function! s:FixFullscreenAfterSource() abort
         call <SID>ToggleFullscreen()
     endif
 endfunction
-
-" Quickly source current file
-if exists("g:VIM_RC")
-    noremap <silent> <Leader>s :wa<CR>:exe "source " . g:VIM_RC<CR>:call <SID>FixFullscreenAfterSource()<CR>
-else
-    echom "You need to set VIM_RC variable so that it points to this file"
-endif
-
-" Remove highlight after searching
-:noremap <silent> <Leader>/ :noh<CR>
 
 "" Functions
 " This function trims the whole file!
