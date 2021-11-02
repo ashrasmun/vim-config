@@ -5,8 +5,12 @@ endif
 
 let g:VIM_RC_ROOT_DIR=fnamemodify(g:VIM_RC, ':h')
 
-execute "source " . g:VIM_RC_ROOT_DIR . "/details/prologue.vim"
-execute "source " . g:VIM_RC_ROOT_DIR . "/details/epilogue.vim"
+function SourceDetail(detail_script)
+    execute "source " . g:VIM_RC_ROOT_DIR . "/details/" . a:detail_script
+endfunction
+
+call SourceDetail("prologue.vim")
+call SourceDetail("epilogue.vim")
 
 " ------------------------------------------------------------------------------
 
