@@ -14,7 +14,7 @@ if exists("g:VIM_RC")
     nnoremap <silent> <Leader>v :execute 'edit!' g:VIM_RC<CR>:set number relativenumber<CR>:<ESC>
 
     " Quickly source current file
-    nnoremap <silent> <Leader>s :wa<CR>:exe "source " . g:VIM_RC<CR>:call <SID>FixFullscreenAfterSource()<CR>
+    nnoremap <silent> <Leader>s :wa<CR>:exe "source " . g:VIM_RC<CR>:call FixFullscreenAfterSource()<CR>
 else
     echom "You need to set VIM_RC variable so that it points to the main .vimrc file"
 endif

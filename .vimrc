@@ -311,7 +311,7 @@ if has('win32')
         let g:goyo_state = 1
 
         " This works for 'nord' colorscheme
-        let l:eob_color = g:get_color("ColorColumn", "guifg")
+        let l:eob_color = GetColor("ColorColumn", "guifg")
         silent! execute "highlight EndOfBuffer guifg=" . l:eob_color
 
         set number relativenumber
@@ -361,7 +361,7 @@ set guioptions-=M " left-hand scroll bar
 " Make sure that color of the background for line numbers is the same
 " as the normal background
 function! s:normalize_bg_color() abort
-    let l:normal_bg_color = g:get_color("Normal", "guibg")
+    let l:normal_bg_color = GetColor("Normal", "guibg")
     execute "hi LineNr guibg=" . l:normal_bg_color
 endfunction
 
