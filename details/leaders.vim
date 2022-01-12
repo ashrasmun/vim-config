@@ -11,7 +11,7 @@ nnoremap <silent> <Leader>/ :noh<CR>
 
 if exists("g:VIM_RC")
     " Quickly access the main .vimrc file
-    nnoremap <silent> <Leader>v :execute 'edit!' g:VIM_RC<CR>:set number relativenumber<CR>:<ESC>
+    nnoremap <silent> <Leader>v :execute 'edit!' g:VIM_RC<CR>:<ESC>
 
     " Quickly source current file
     nnoremap <silent> <Leader>s :wa<CR>:exe "source " . g:VIM_RC<CR>:call FixFullscreenAfterSource()<CR>

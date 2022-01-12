@@ -88,7 +88,8 @@ autocmd BufNewFile,BufRead *.h   call <SID>set_indentation_rules()
 let python_highlight_all=1
 
 " Enable line numbering
-:set number relativenumber
+" set number relativenumber
+set nonumber norelativenumber
 
 " Highlight the searched result by default
 :set hlsearch
@@ -211,15 +212,15 @@ let plugin_location='$VIMRUNTIME\plugged'
     Plug 'pangloss/vim-javascript'
 
     " Colorschemes
-    " Plug 'tyrannicaltoucan/vim-deep-space' " Quite ok, colorful, but still calm
-    " Plug 'whatyouhide/vim-gotham'          " Quite ok
-    " Plug 'cocopon/iceberg.vim'             " Quite ok, but split triggers me
-    " Plug 'arzg/vim-substrata'              " +
-    " Plug 'ludokng/vim-odyssey'             " +-
-    " Plug 'seesleestak/duo-mini'            " +
-    " Plug 'jacoborus/tender.vim'            " +
-    " Plug 'tomasiser/vim-code-dark'         " well, it's vs
-    " Plug 'embark-theme/vim'
+    Plug 'tyrannicaltoucan/vim-deep-space' " Quite ok, colorful, but still calm
+    Plug 'whatyouhide/vim-gotham'          " Quite ok
+    Plug 'cocopon/iceberg.vim'             " Quite ok, but split triggers me
+    Plug 'arzg/vim-substrata'              " +
+    "Plug 'ludokng/vim-odyssey'             " +-
+    Plug 'seesleestak/duo-mini'            " +
+    Plug 'jacoborus/tender.vim'            " +
+    Plug 'tomasiser/vim-code-dark'         " well, it's vs
+    Plug 'embark-theme/vim'
     Plug 'nanotech/jellybeans.vim'  " Pretty minimalistic
 :call plug#end()
 
@@ -261,6 +262,23 @@ endfunction
 " Keep the 'silent!' as it hides unimportant warnings when :Files is first
 " invoked.
 noremap <Leader>f :call FZFOpen(':silent! Files %:h')<CR>
+
+" TODO: Check why doesn't it work :)
+let g:fzf_colors = {
+    \ 'fg':      ['guifg', 'Normal'],
+    \ 'bg':      ['guibg', 'Normal'],
+    \ 'hl':      ['guifg', 'Comment'],
+    \ 'fg+':     ['guifg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['guibg', 'CursorLine', 'CursorColumn'],
+    \ 'hl+':     ['guifg', 'Statement'],
+    \ 'info':    ['guifg', 'PreProc'],
+    \ 'border':  ['guifg', 'Ignore'],
+    \ 'prompt':  ['guifg', 'Conditional'],
+    \ 'pointer': ['guifg', 'Normal'],
+    \ 'marker':  ['guifg', 'Keyword'],
+    \ 'spinner': ['guifg', 'Label'],
+    \ 'header':  ['guifg', 'Comment']
+    \ }
 
 "" NERDTree
 " Invoke nerd tree every time vim is opened
@@ -314,7 +332,8 @@ if has('win32')
         let l:eob_color = GetColor("ColorColumn", "guifg")
         silent! execute "highlight EndOfBuffer guifg=" . l:eob_color
 
-        set number relativenumber
+        "set number relativenumber
+        set nonumber norelativenumber
     endfunction
 
     " This supports leaving Goyo via :x, :q etc
