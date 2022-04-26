@@ -348,6 +348,10 @@ if has('win32')
     noremap <silent> <F3> :Goyo<CR>:call <SID>FullscreenFix()<CR>
 endif
 
+"" Fonts
+" Use 16 for streams, 12 for solo work
+set guifont=Cascadia\ Code:h12,Consolas:h16,ProFontWindows:h14,Fira\ Mono:h14
+
 " Interface clean-up
 " The only variation of vim usable on Windows is GVim, so all the settings
 " assume it's usage
@@ -418,12 +422,12 @@ command! FormatJSON :%!python -m json.tool
 
 "" Fonts
 " This needs to be there - it's an initialization required on startup
-let s:fontsize = 12
-execute "set guifont=Cascadia\\ Code:h" . s:fontsize . ",Consolas:h" . s:fontsize . ",ProFontWindows:h" . s:fontsize . ",Fira\\ Mono:h" . s:fontsize
+set guifont=Cascadia\ Code:h12
 
+let s:fontsize = 12
 function! AdjustFontSize(amount)
   let s:fontsize = s:fontsize + a:amount
-  execute "set guifont=Cascadia\\ Code:h" . s:fontsize . ",Consolas:h" . s:fontsize . ",ProFontWindows:h" . s:fontsize . ",Fira\\ Mono:h" . s:fontsize
+  execute "set guifont=Cascadia\\ Code:h" . s:fontsize
 
   " Make sure 'set guifont' has enough column to not excessively shrink the
   " window on resize.
